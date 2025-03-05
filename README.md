@@ -65,3 +65,7 @@ I also have a [LIVE course on learning GitHub Actions for DevOps automation and 
 - [My "Vital DevOps" Discord server](https://devops.fan)
 - [My weekly YouTube Live show](https://bret.live)
 - [My courses and coupons](https://www.bretfisher.com/courses)
+
+
+## Just a GHA test 
+Testing GitHub actions
