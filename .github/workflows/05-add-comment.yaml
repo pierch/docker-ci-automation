@@ -12,13 +12,12 @@ jobs:
     name: Build Images
     runs-on: ubuntu-latest
 
-#NEW: (START) ##########################################################
+    #NEW: (START) ##########################################################
     permissions:
       pull-requests: write # needed to create and update comments in PRs
-#NEW: (END) ############################################################
+    #NEW: (END) ############################################################
 
     steps:
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -44,7 +43,7 @@ jobs:
             type=ref,event=pr
             type=ref,event=branch
             type=semver,pattern={{version}}
-      
+
       - name: Docker build
         uses: docker/build-push-action@v6
         with:
@@ -59,19 +58,18 @@ jobs:
           # linux/arm/v7 is for 32-bit ARM devices like Raspberry Pi 2/3
           platforms: linux/amd64,linux/arm64
 
-
-#NEW: (START) ##########################################################
-        # If PR, put image tags in the PR comments
-        # from https://github.com/marketplace/actions/create-or-update-comment
+      #NEW: (START) ##########################################################
+      # If PR, put image tags in the PR comments
+      # from https://github.com/marketplace/actions/create-or-update-comment
       - name: Find comment for image tags
         uses: peter-evans/find-comment@v3
         if: github.event_name == 'pull_request'
         id: fc
         with:
           issue-number: ${{ github.event.pull_request.number }}
-          comment-author: 'github-actions[bot]'
+          comment-author: "github-actions[bot]"
           body-includes: Docker image tag(s) pushed
-      
+
         # If PR, put image tags in the PR comments
       - name: Create or update comment for image tags
         uses: peter-evans/create-or-update-comment@v4

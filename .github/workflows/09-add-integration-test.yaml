@@ -13,7 +13,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout git repo
         uses: actions/checkout@v4
 
@@ -40,17 +39,15 @@ jobs:
           cache-to: type=gha,mode=max
           platforms: linux/amd64
 
-#NEW: (START) ############################################################  
-        # for more advanced tests, use docker compose with `depends_on`
-          # NOTE: GHA and other CIs can also run dependency containers on their own
-          # GHA `services:` can do this if you're trying to avoid docker compose
+      #NEW: (START) ############################################################
+      # for more advanced tests, use docker compose with `depends_on`
+      # NOTE: GHA and other CIs can also run dependency containers on their own
+      # GHA `services:` can do this if you're trying to avoid docker compose
       - name: Test healthcheck in Docker Compose
         run: |
           export TESTING_IMAGE="${{ github.run_id }}"
           docker compose -f docker-compose.test.yml up --exit-code-from sut
-#NEW: (END) ############################################################  
-
-
+      #NEW: (END) ############################################################
       - name: Docker Metadata for Final Image Build
         id: docker_meta
         uses: docker/metadata-action@v5
@@ -65,7 +62,7 @@ jobs:
           # type=ref,event=pr
           # type=ref,event=branch
           # type=semver,pattern={{version}}
-      
+
       - name: Docker Build and Push to Docker Hub
         uses: docker/build-push-action@v6
         with:
