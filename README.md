@@ -6,7 +6,7 @@
 
 [![All-Hands Automation with Docker](https://user-images.githubusercontent.com/792287/160971371-0ae75c14-1ea4-4a11-82dc-f35f96184fa3.gif)](https://www.youtube.com/watch?v=aZzV6X7XhyI)
 
-Watch the walkthrough of this repo: [https://www.youtube.com/watch?v=aZzV6X7XhyI](https://www.youtube.com/watch?v=aZzV6X7XhyI)
+Watch the walkthrough of this repository: [https://www.youtube.com/watch?v=aZzV6X7XhyI](https://www.youtube.com/watch?v=aZzV6X7XhyI)
 
 See this repositories' [`.github/workflows`](.github/workflows) directory for the below example workflows, ordered by number, simple to complex.
 
@@ -66,6 +66,6 @@ I also have a [LIVE course on learning GitHub Actions for DevOps automation and 
 - [My weekly YouTube Live show](https://bret.live)
 - [My courses and coupons](https://www.bretfisher.com/courses)
 
+## Just a GHA test
 
-## Just a GHA test 
-Testing GitHub actions
+Testing GitHub Actions
