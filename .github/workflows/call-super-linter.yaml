@@ -8,6 +8,8 @@ on:
 
   pull_request:
 
+permissions: read-all
+
 jobs:
   call-super-linter:
     name: Call Super-Linter

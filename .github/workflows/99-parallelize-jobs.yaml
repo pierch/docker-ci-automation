@@ -7,6 +7,8 @@ on:
       - main
   pull_request:
 
+permissions: read-all
+
 jobs:
   # FIRST JOB #######################################################################
   build-test-image:
