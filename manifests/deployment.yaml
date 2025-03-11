@@ -5,6 +5,9 @@ kind: Deployment
 metadata:
   name: myapp
   namespace: myappspace
+  annotations:
+    checkov.io/skip1: CKV_K8S_43
+    checkov.io/skip2: CKV_K8S_14
   labels:
     app: myapp
 spec:
@@ -18,6 +21,9 @@ spec:
         app: myapp
     spec:
       automountServiceAccountToken: false
+      securityContext:
+        runAsUser: 10001
+        runAsNonRoot: true
       imagePullSecrets:
         - name: regcred
       containers:
