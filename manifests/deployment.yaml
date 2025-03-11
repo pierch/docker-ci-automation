@@ -26,7 +26,7 @@ spec:
           readinessProbe:
             httpGet:
               path: /
-              port: 80          
+              port: 80
           livenessProbe:
             httpGet:
               path: /
@@ -37,10 +37,10 @@ spec:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
             seccompProfile:
-              type: RuntimeDefault            
+              type: RuntimeDefault
             capabilities:
               drop:
-                - ALL            
+                - ALL
           resources:
             limits:
               memory: "128Mi"
