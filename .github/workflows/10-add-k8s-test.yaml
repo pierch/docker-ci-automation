@@ -66,12 +66,17 @@ jobs:
           echo "Waiting for Core Kubernetes services to be Ready..."
           kubectl wait --for=condition=Ready pod -n kube-system --all --timeout=90s
 
-          echo "Cluster is ready!"
+          echo "Ensuring namespace 'myappspace' exists..."
+          kubectl create namespace myappspace || true
+
+          echo "Waiting for all pods in 'myappspace' to be Ready..."
+          kubectl wait --for=condition=Ready pod -n myappspace --all --timeout=90s || true
+
+          echo "Cluster and namespace are ready!"
           kubectl get nodes -o wide
           kubectl get pods -A
       - name: Smoke test deployment in k3d Kubernetes
         run: |
-          kubectl create namespace myappspace || true
           kubectl create secret docker-registry regcred \
             --docker-server=https://ghcr.io \
             --docker-username=${{ github.actor }} \
