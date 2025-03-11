@@ -58,7 +58,17 @@ jobs:
             --agents 1
             --no-lb
             --k3s-arg "--no-deploy=traefik,servicelb,metrics-server@server:*"
+      - name: Wait for k3d cluster to be ready
+        run: |
+          echo "Waiting for cluster nodes to be Ready..."
+          kubectl wait --for=condition=Ready nodes --all --timeout=90s
 
+          echo "Waiting for Core Kubernetes services to be Ready..."
+          kubectl wait --for=condition=Ready pod -n kube-system --all --timeout=90s
+
+          echo "Cluster is ready!"
+          kubectl get nodes -o wide
+          kubectl get pods -A
       - name: Smoke test deployment in k3d Kubernetes
         run: |
           kubectl create namespace myappspace || true
