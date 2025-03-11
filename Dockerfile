@@ -1,5 +1,5 @@
 # Base Stage
-FROM nginx:1.26-alpine AS base
+FROM nginx:1.26.3-alpine-slim AS base
 
 # Create a non-root user
 RUN adduser -u 10001 -D -g "" appuser
