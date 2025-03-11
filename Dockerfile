@@ -6,7 +6,8 @@ RUN adduser -u 10001 -D -g "" appuser
 
 # Ensure necessary directories exist and set proper ownership
 RUN mkdir -p /var/cache/nginx /var/run /etc/nginx /etc/nginx/conf.d && \
-    chown -R appuser:appuser /var/cache/nginx /var/run /etc/nginx /etc/nginx/nginx.conf /etc/nginx/conf.d
+    touch /var/run/nginx.pid && \
+    chown -R appuser:appuser /var/cache/nginx /var/run /var/run/nginx.pid /etc/nginx /etc/nginx/nginx.conf /etc/nginx/conf.d
 
 # Install necessary utilities
 RUN apk add --no-cache curl
