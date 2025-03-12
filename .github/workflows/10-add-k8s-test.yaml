@@ -58,25 +58,10 @@ jobs:
             --agents 1
             --no-lb
             --k3s-arg "--no-deploy=traefik,servicelb,metrics-server@server:*"
-      - name: Wait for k3d cluster to be ready
-        run: |
-          echo "Waiting for cluster nodes to be Ready..."
-          kubectl wait --for=condition=Ready nodes --all --timeout=90s
-
-          echo "Waiting for Core Kubernetes services to be Ready..."
-          kubectl wait --for=condition=Ready pod -n kube-system --all --timeout=90s
-
-          echo "Ensuring namespace 'myappspace' exists..."
-          kubectl create namespace myappspace || true
-
-          echo "Waiting for all pods in 'myappspace' to be Ready..."
-          kubectl wait --for=condition=Ready pod -n myappspace --all --timeout=90s || true
-
-          echo "Cluster and namespace are ready!"
-          kubectl get nodes -o wide
-          kubectl get pods -A
       - name: Smoke test deployment in k3d Kubernetes
         run: |
+          echo "Ensuring namespace 'myappspace' exists..."
+          kubectl create namespace myappspace || true        
           kubectl create secret docker-registry regcred \
             --docker-server=https://ghcr.io \
             --docker-username=${{ github.actor }} \
@@ -86,6 +71,12 @@ jobs:
           envsubst < manifests/deployment.yaml  | kubectl apply -f -
           kubectl rollout status deployment myapp -n myappspace
           kubectl exec deploy/myapp -n myappspace -- curl --fail localhost
+          echo "Waiting for all pods in 'myappspace' to be Ready..."
+          kubectl wait --for=condition=Ready pod -n myappspace --all --timeout=90s || true
+
+          echo "Cluster and namespace are ready!"
+          kubectl get nodes -o wide
+          kubectl get pods -A
       #NEW: (END) ############################################################
       - name: Docker Metadata for Final Image Build
         id: docker_meta
