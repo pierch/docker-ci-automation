@@ -80,15 +80,15 @@ jobs:
           echo "Generating image id..."               
           export TESTING_IMAGE=ghcr.io/pierch/docker-ci-automation:"$GITHUB_RUN_ID"
           echo "Apply environment secrets to deployment ..."               
-          envsubst < manifests/deployment.yaml  | kubectl apply -f -
+          envsubst < manifests/deployment.yaml  | kubectl apply -n myappspace -f -
           echo "Get all deployments ..."
-          kubectl get deployments
+          kubectl get deployments -n myappspace
           echo "Describe of the deployment 1 ..."
-          kubectl describe deployment myapp
+          kubectl describe deployment myapp -n myappspace
           echo "Rollout of the deployment ..."  
           kubectl rollout status deployment myapp -n myappspace
           echo "Describe of the deployment 1 ..."
-          kubectl describe deployment myapp          
+          kubectl describe deployment myapp -n myappspace         
           echo "Waiting for all pods in 'myappspace' to be Ready..."
           kubectl wait --for=condition=Ready pod -n myappspace --all --timeout=90s || true
 
