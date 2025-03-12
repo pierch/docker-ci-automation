@@ -81,8 +81,12 @@ jobs:
           export TESTING_IMAGE=ghcr.io/pierch/docker-ci-automation:"$GITHUB_RUN_ID"
           echo "Apply environment secrets to deployment ..."               
           envsubst < manifests/deployment.yaml  | kubectl apply -f -
-          echo "Rollout of the deployment ..."   
+          echo "Describe of the deployment 1 ..."
+          kubectl describe deployment myapp
+          echo "Rollout of the deployment ..."  
           kubectl rollout status deployment myapp -n myappspace
+          echo "Describe of the deployment 1 ..."
+          kubectl describe deployment myapp          
           echo "Waiting for all pods in 'myappspace' to be Ready..."
           kubectl wait --for=condition=Ready pod -n myappspace --all --timeout=90s || true
 
