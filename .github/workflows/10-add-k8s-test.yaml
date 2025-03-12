@@ -1,11 +1,7 @@
 ---
 name: 10 Build and Smoke Test
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
+on: workflow_dispatch
 
 permissions: read-all
 
