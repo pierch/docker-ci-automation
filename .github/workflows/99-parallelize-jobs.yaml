@@ -133,14 +133,15 @@ jobs:
 
       - name: Smoke test deployment in k3d Kubernetes
         run: |
-          kubectl create secret docker-registry regcred \
+          kubectl create namespace myappspace || true  
+          kubectl create secret -n myappspace docker-registry regcred \
             --docker-server=https://ghcr.io \
             --docker-username=${{ github.actor }} \
             --docker-password=${{ secrets.GITHUB_TOKEN }}
           export TESTING_IMAGE=ghcr.io/pierch/docker-ci-automation:"$GITHUB_RUN_ID"
-          envsubst < manifests/deployment.yaml  | kubectl apply -f -
-          kubectl rollout status deployment myapp
-          kubectl exec deploy/myapp -- curl --fail localhost
+          envsubst < manifests/deployment.yaml  | kubectl apply -n myappspace -f -
+          kubectl rollout status deployment myapp -n myappspace
+          kubectl exec deploy/myapp -n myappspace -- curl --fail localhost
 
   # NEXT JOB #######################################################################
   scan-image:
