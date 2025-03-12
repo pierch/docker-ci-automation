@@ -85,13 +85,10 @@ jobs:
           kubectl get deployments -n myappspace
           echo "Describe of the deployment 1 ..."
           kubectl describe deployment myapp -n myappspace
-          echo "Rollout of the deployment ..."  
-          kubectl rollout status deployment myapp -n myappspace
-          echo "Describe of the deployment 1 ..."
-          kubectl describe deployment myapp -n myappspace         
           echo "Waiting for all pods in 'myappspace' to be Ready..."
           kubectl wait --for=condition=Ready pod -n myappspace --all --timeout=90s || true
-
+          echo "Describe of the deployment 2 ..."
+          kubectl describe deployment myapp -n myappspace         
           kubectl get nodes -o wide
           kubectl get pods -A          
 
