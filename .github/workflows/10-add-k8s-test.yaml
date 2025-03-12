@@ -69,14 +69,16 @@ jobs:
             --namespace=myappspace
           export TESTING_IMAGE=ghcr.io/pierch/docker-ci-automation:"$GITHUB_RUN_ID"
           envsubst < manifests/deployment.yaml  | kubectl apply -f -
+
           kubectl rollout status deployment myapp -n myappspace
-          kubectl exec deploy/myapp -n myappspace -- curl --fail localhost
           echo "Waiting for all pods in 'myappspace' to be Ready..."
           kubectl wait --for=condition=Ready pod -n myappspace --all --timeout=90s || true
 
           echo "Cluster and namespace are ready!"
           kubectl get nodes -o wide
-          kubectl get pods -A
+          kubectl get pods -A          
+
+          kubectl exec deploy/myapp -n myappspace -- curl --fail localhost
       #NEW: (END) ############################################################
       - name: Docker Metadata for Final Image Build
         id: docker_meta
