@@ -1,0 +1,5 @@
+FROM node:alpine
+
+WORKDIR /tmp
+
+RUN npm install --save-dev --save-exact prettier
