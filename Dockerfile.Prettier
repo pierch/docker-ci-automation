@@ -1,12 +1,13 @@
 FROM node:alpine
 
-# Create a non-root user and group
+# Create a non-root user and group (we could also use in base image created user 'node', in this case creation of user and group is not needed and would fail)
 RUN addgroup -S prettiergroup && adduser -S prettier -G prettiergroup
 
 # Set working directory
 WORKDIR /tmp
 
 # Switch to the new non-root user
+# alternative is to switch to user node
 USER prettier
 
 # Install npm package (Prettier)
