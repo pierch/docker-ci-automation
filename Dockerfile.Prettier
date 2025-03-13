@@ -1,5 +1,16 @@
 FROM node:alpine
 
+# Create a non-root user and group
+RUN addgroup -S prettiergroup && adduser -S prettier -G prettiergroup
+
+# Set working directory
 WORKDIR /tmp
 
+# Switch to the new non-root user
+USER prettier
+
+# Install npm package (Prettier)
 RUN npm install --save-dev --save-exact prettier
+
+# Add a health check
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 CMD prettier --version || exit 1
